@@ -2,10 +2,16 @@ const express = require('express');
 const path = require('path');
 const cors = require('cors');
 const CharacterAI = require('node_characterai');
+const corsOptions = {
+    origin: 'https://jimmypalabre.azurewebsites.net',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+  };
 
 const app = express();
 app.use('/public', express.static('public'));
-app.use(cors({ origin: "*" }));
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const characterAI = new CharacterAI();
@@ -50,7 +56,7 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
