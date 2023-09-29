@@ -10,6 +10,12 @@ const corsOptions = {
   };
 
 const app = express();
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://jimmypalabre.azurewebsites.net');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+  });
 app.use('/public', express.static('public'));
 app.use(cors(corsOptions));
 app.use(express.json());
